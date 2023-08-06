@@ -1,33 +1,41 @@
 package com.monique.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private Long id;
+	
+	@Id
+	private String id;
 	private String name;
 	private String email;
-	private String phone;
-	private String password;
+	
 
+	@DBRef(lazy = true)
+	private List<Post> posts = new ArrayList<>();
+	
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String phone, String password) {
+	public User(String id, String name, String email) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.phone = phone;
-		this.password = password;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -47,21 +55,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
+		public List<Post> getPosts() {
+		return posts;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@Override
 	public int hashCode() {
